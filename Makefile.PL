@@ -4,21 +4,16 @@ use warnings;
 
 use 5.008001;
 
-use ExtUtils::MakeMaker 6.30;
+use ExtUtils::MakeMaker 6.17;
 
 
 
 my %WriteMakefileArgs = (
   "ABSTRACT" => "Moose type constraints for strings or string-like objects",
   "AUTHOR" => "David Golden <dagolden\@cpan.org>",
-  "BUILD_REQUIRES" => {
-    "File::Find" => 0,
-    "File::Temp" => 0,
-    "Moose" => 0,
-    "Test::More" => "0.96"
-  },
+  "BUILD_REQUIRES" => {},
   "CONFIGURE_REQUIRES" => {
-    "ExtUtils::MakeMaker" => "6.30"
+    "ExtUtils::MakeMaker" => "6.17"
   },
   "DISTNAME" => "MooseX-Types-Stringlike",
   "EXE_FILES" => [],
@@ -31,24 +26,38 @@ my %WriteMakefileArgs = (
     "strict" => 0,
     "warnings" => 0
   },
-  "VERSION" => "0.001",
+  "TEST_REQUIRES" => {
+    "ExtUtils::MakeMaker" => 0,
+    "File::Spec::Functions" => 0,
+    "List::Util" => 0,
+    "Moose" => 0,
+    "Test::More" => "0.96"
+  },
+  "VERSION" => "0.002",
   "test" => {
     "TESTS" => "t/*.t"
   }
 );
 
 
-unless ( eval { ExtUtils::MakeMaker->VERSION(6.56) } ) {
-  my $br = delete $WriteMakefileArgs{BUILD_REQUIRES};
-  my $pp = $WriteMakefileArgs{PREREQ_PM};
-  for my $mod ( keys %$br ) {
-    if ( exists $pp->{$mod} ) {
-      $pp->{$mod} = $br->{$mod} if $br->{$mod} > $pp->{$mod};
-    }
-    else {
-      $pp->{$mod} = $br->{$mod};
-    }
-  }
+my %FallbackPrereqs = (
+  "ExtUtils::MakeMaker" => 0,
+  "File::Spec::Functions" => 0,
+  "List::Util" => 0,
+  "Moose" => 0,
+  "MooseX::Types" => 0,
+  "MooseX::Types::Moose" => 0,
+  "Test::More" => "0.96",
+  "overload" => 0,
+  "strict" => 0,
+  "warnings" => 0
+);
+
+
+unless ( eval { ExtUtils::MakeMaker->VERSION(6.63_03) } ) {
+  delete $WriteMakefileArgs{TEST_REQUIRES};
+  delete $WriteMakefileArgs{BUILD_REQUIRES};
+  $WriteMakefileArgs{PREREQ_PM} = \%FallbackPrereqs;
 }
 
 delete $WriteMakefileArgs{CONFIGURE_REQUIRES}

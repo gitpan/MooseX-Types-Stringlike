@@ -4,7 +4,7 @@ use warnings;
 
 package MooseX::Types::Stringlike;
 # ABSTRACT: Moose type constraints for strings or string-like objects
-our $VERSION = '0.001'; # VERSION
+our $VERSION = '0.002'; # VERSION
 
 use MooseX::Types -declare => [ qw/Stringable Stringlike/ ];
 use MooseX::Types::Moose qw/Str Object/;
@@ -28,7 +28,10 @@ coerce Stringlike,
 # vim: ts=2 sts=2 sw=2 et:
 
 __END__
+
 =pod
+
+=encoding UTF-8
 
 =head1 NAME
 
@@ -36,7 +39,7 @@ MooseX::Types::Stringlike - Moose type constraints for strings or string-like ob
 
 =head1 VERSION
 
-version 0.001
+version 0.002
 
 =head1 SYNOPSIS
 
@@ -101,7 +104,7 @@ Thank you to Dagfinn Ilmari Mannsåker for the idea on IRC that led to this modu
 =head2 Bugs / Feature Requests
 
 Please report any bugs or feature requests through the issue tracker
-at L<http://rt.cpan.org/Public/Dist/Display.html?Name=MooseX-Types-Stringlike>.
+at L<https://github.com/dagolden/MooseX-Types-Stringlike/issues>.
 You will be notified automatically of any progress on your issue.
 
 =head2 Source Code
@@ -109,9 +112,9 @@ You will be notified automatically of any progress on your issue.
 This is open source software.  The code repository is available for
 public review and contribution under the terms of the license.
 
-L<https://github.com/dagolden/moosex-types-stringlike>
+L<https://github.com/dagolden/MooseX-Types-Stringlike>
 
-  git clone https://github.com/dagolden/moosex-types-stringlike.git
+  git clone https://github.com/dagolden/MooseX-Types-Stringlike.git
 
 =head1 AUTHOR
 
@@ -126,4 +129,3 @@ This is free software, licensed under:
   The Apache License, Version 2.0, January 2004
 
 =cut
-

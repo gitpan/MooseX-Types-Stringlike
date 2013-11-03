@@ -3,7 +3,7 @@ NAME
     string-like objects
 
 VERSION
-    version 0.001
+    version 0.002
 
 SYNOPSIS
       package Foo;
@@ -49,16 +49,16 @@ ACKNOWLEDGMENTS
 SUPPORT
   Bugs / Feature Requests
     Please report any bugs or feature requests through the issue tracker at
-    <http://rt.cpan.org/Public/Dist/Display.html?Name=MooseX-Types-Stringlik
-    e>. You will be notified automatically of any progress on your issue.
+    <https://github.com/dagolden/MooseX-Types-Stringlike/issues>. You will
+    be notified automatically of any progress on your issue.
 
   Source Code
     This is open source software. The code repository is available for
     public review and contribution under the terms of the license.
 
-    <https://github.com/dagolden/moosex-types-stringlike>
+    <https://github.com/dagolden/MooseX-Types-Stringlike>
 
-      git clone https://github.com/dagolden/moosex-types-stringlike.git
+      git clone https://github.com/dagolden/MooseX-Types-Stringlike.git
 
 AUTHOR
     David Golden <dagolden@cpan.org>
