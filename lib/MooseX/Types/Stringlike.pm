@@ -4,10 +4,10 @@ use warnings;
 
 package MooseX::Types::Stringlike;
 # ABSTRACT: Moose type constraints for strings or string-like objects
-our $VERSION = '0.002'; # VERSION
+our $VERSION = '0.003'; # VERSION
 
-use MooseX::Types -declare => [ qw/Stringable Stringlike/ ];
-use MooseX::Types::Moose qw/Str Object/;
+use MooseX::Types -declare => [ qw/Stringable Stringlike ArrayRefOfStringable ArrayRefOfStringlike / ];
+use MooseX::Types::Moose qw/Str Object ArrayRef/;
 use overload ();
 
 # Thanks ilmari for suggesting something like this
@@ -21,6 +21,17 @@ subtype Stringlike,
 coerce Stringlike,
   from Stringable,
   via { "$_" };
+
+
+subtype ArrayRefOfStringable,
+  as ArrayRef[Stringable];
+
+subtype ArrayRefOfStringlike,
+  as ArrayRef[Stringlike];
+
+coerce ArrayRefOfStringlike,
+  from ArrayRefOfStringable,
+  via { [ map { "$_" } @$_ ] };
 
 1;
 
@@ -39,15 +50,15 @@ MooseX::Types::Stringlike - Moose type constraints for strings or string-like ob
 
 =head1 VERSION
 
-version 0.002
+version 0.003
 
 =head1 SYNOPSIS
 
   package Foo;
   use Moose;
-  use MooseX::Types::Stringlike qw/Stringlike Stringable/;
-  
-  has path => ( 
+  use MooseX::Types::Stringlike qw/Stringlike Stringable ArrayRefOfStringlike ArrayRefOfStringable/;
+
+  has path => (
     is => 'ro',
     isa => Stringlike,
     coerce => 1
@@ -56,6 +67,17 @@ version 0.002
   has stringable_object => (
     is => 'ro',
     isa => Stringable,
+  );
+
+  has paths => (
+    is => 'ro',
+    isa => ArrayRefOfStringlike,
+    coerce => 1
+  );
+
+  has stringable_objects => (
+    is => 'ro',
+    isa => ArrayRefOfStringable,
   );
 
 =head1 DESCRIPTION
@@ -79,6 +101,15 @@ a string.
 
 C<Stringable> is a subtype of C<Object> where the object has overloaded stringification.
 
+=head2 ArrayRefOfStringlike
+
+C<ArrayRefStringlike> is a subtype of C<ArrayRef[Str]>.  It can coerce C<ArrayRefOfStringable> objects into
+an arrayref of strings.
+
+=head2 ArrayRefOfStringable
+
+C<ArrayRefOfStringable> is a subtype of C<ArrayRef[Object]> where the objects have overloaded stringification.
+
 =head1 SEE ALSO
 
 =over 4
@@ -90,6 +121,10 @@ L<Moose::Manual::Types>
 =item *
 
 L<MooseX::Types>
+
+=item *
+
+L<MooseX::Types::Moose>
 
 =back
 
@@ -119,6 +154,10 @@ L<https://github.com/dagolden/MooseX-Types-Stringlike>
 =head1 AUTHOR
 
 David Golden <dagolden@cpan.org>
+
+=head1 CONTRIBUTOR
+
+Karen Etheridge <ether@cpan.org>
 
 =head1 COPYRIGHT AND LICENSE
 
